@@ -225,6 +225,8 @@ def secretbuildwrapper(top, parent):
             bindings.append({'text': params})
         elif binding.tag == 'com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding':
             bindings.append({'amazon-web-services': params})
+        elif binding.tag == 'org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding':
+            bindings.append({'ssh-user-private-key': params})
         else:
             raise NotImplementedError("cannot handle XML %s" % binding.tag)
 
@@ -234,13 +236,21 @@ def secretbuildwrapper(top, parent):
             elif child.tag == 'variable':
                 params['variable'] = child.text
             elif child.tag == 'usernameVariable':
-                params['username'] = child.text
+                if binding.tag != 'org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding':
+                    params['username'] = child.text
+                elif child.text is not None:
+                    params['username-variable'] = child.text
             elif child.tag == 'passwordVariable':
                 params['password'] = child.text
             elif child.tag == 'accessKeyVariable':
                 params['access-key'] = child.text
             elif child.tag == 'secretKeyVariable':
                 params['secret-key'] = child.text
+            elif child.tag == 'keyFileVariable':
+                params['key-file-variable'] = child.text
+            elif child.tag == 'passphraseVariable':
+                if child.text is not None:
+                    params['passphrase-variable'] = child.text
             else:
                 raise NotImplementedError("cannot handle XML %s" % binding.tag)
 

@@ -1,0 +1,10 @@
+<org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.24">
+    <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+            <credentialsId>ssh-key-backup</credentialsId>
+            <keyFileVariable>BUILD_KEY</keyFileVariable>
+            <usernameVariable>USERNAME</usernameVariable>
+            <passphraseVariable>PASSPHRASE</passphraseVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+    </bindings>
+</org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
